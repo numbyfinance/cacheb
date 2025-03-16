@@ -23,34 +23,33 @@ Create a `build.rs` to trigger `cacheb` whenever your static files change.
 fn main() {
     println!("cargo:rerun-if-changed=static/");
     cacheb::codegen(
-        &PathBuf::from("src/static_assets.rs"),
-        &[PathBuf::from("static")],
-        &[]
+        &PathBuf::from("src/statics.rs"),  // Path to generate file
+        &[PathBuf::from("static")],        // Path(s) to static assets
+        &[]                                // Additional files to use
     ).unwrap();
 }
 ```
 
-Reference your static assets in templates (eg. [Maud](https://maud.lambda.xyz/)) with automatic cache busting:
+Reference your static assets in templates with automatic cache busting, eg. Maud:
 
 ```rust
-mod static_assets;
-use static_assets::*;
+use statics;
 
 fn page() -> maud::Markup {
     html! {
         head {
-            link rel="stylesheet" href=(styles::main_css);
-            link rel="icon" href=(favicon_ico);
+            link rel="stylesheet" href=(statics::styles::main_css);
+            link rel="icon" href=(statics::favicon_ico);
         }
         body {
-            img src=(images::logo_png) alt="Logo";
-            script src=(scripts::app_js) {}
+            img src=(statics::images::logo_png) alt="Logo";
+            script src=(statics::scripts::app_js) {}
         }
     }
 }
 ```
 
-Implement a handler to serve your static files:
+Implement a handler to serve your static files, eg. Axum:
 
 ```rust
 #[derive(TypedPath, Deserialize)]
