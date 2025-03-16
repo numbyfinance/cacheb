@@ -4,8 +4,8 @@ version = "0.1.0"
 edition = "2021"
 description = "Compile time cache busting for static assets in web applications."
 license = "MIT"
-repository = "https://github.com/NumbyFinance/cacheb"
-homepage = "https://github.com/NumbyFinance/cacheb"
+repository = "https://github.com/numbyfinance/cacheb"
+homepage = "https://github.com/numbyfinance/cacheb"
 
 [dependencies]
 md5 = "0.7"
